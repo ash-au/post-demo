@@ -1,0 +1,118 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: FinancialServices_v1
+  description: An OAS document generated from WSDL
+  termsOfService: ''
+  contact:
+    name: API Team
+  license:
+    name: Apache 2.0
+host: demo-au06-test.apigee.net
+basePath: /foreignexchange/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /productfxrates_v1:
+    get:
+      description: Implements WSDL operation getProductFXRates_v1
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/getProductFXRatesResponse'
+          description: Successful response
+      parameters:
+        - in: query
+          name: InterfaceName
+          required: true
+          type: string
+          description: Interface Name e.g. "getFx".
+        - in: query
+          name: InterfaceVersion
+          required: true
+          type: string
+          description: Interface Version e.g. "1.0".
+        - in: query
+          name: MessageType
+          required: true
+          type: string
+          description: Message Type e.g. "Request".
+        - in: query
+          name: BusinessReferenceID
+          required: true
+          type: string
+          description: Business Reference ID e.g. "testgetFx001".
+        - in: query
+          name: SourceSystemID
+          required: true
+          type: string
+          description: Source System ID e.g. "Gateway".
+        - in: query
+          name: Timestamp
+          required: true
+          type: string
+          description: Source System ID e.g. "2019-05-31T00:00:00Z".
+        - in: query
+          name: OrganisationName
+          required: true
+          type: string
+          description: Source System ID e.g. "Access Prepaid Travel AOL".
+
+definitions:
+  getProductFXRatesResponse:
+      properties: 
+        getProductFXRatesResponse: 
+          required: 
+            - "Supplier"
+          properties: 
+            Supplier: 
+              required: 
+                - "Organisation"
+                - "Product"
+              properties: 
+                Organisation: 
+                  required: 
+                    - "OrganisationName"
+                  properties: 
+                    OrganisationName: 
+                      type: "string"
+                  type: "object"
+                Product: 
+                  required: 
+                    - "@type"
+                    - "ProductID"
+                    - "ProductName"
+                    - "CurrencyTranslationRate"
+                  properties: 
+                    "@type": 
+                      type: "string"
+                    ProductID: 
+                      type: "string"
+                    ProductName: 
+                      required: 
+                        - "@languageCode"
+                        - "TEXT"
+                      properties: 
+                        "@languageCode": 
+                          type: "string"
+                        TEXT: 
+                          type: "string"
+                      type: "object"
+                    CurrencyTranslationRate: 
+                      type: "array"
+                      items: 
+                        type: "object"
+                        properties: 
+                          SourceCurrency: 
+                            type: "string"
+                          TargetCurrency: 
+                            type: "string"
+                          SourceToTargetCurrencyRate: 
+                            type: "number"
+                  type: "object"
+              type: "object"
+          type: "object"
