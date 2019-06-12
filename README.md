@@ -1,7 +1,8 @@
 # post-demo
 
 ## Step 1
-Build a JSON proxy for SOAP endoint. This can be done by deploying the attached proxy or creating a new proxy with SOAP backend.
+Build a JSON proxy for SOAP endoint using existing Foreign Exchange WSDL, or
+Deploy this proxy https://github.com/ash-au/post-demo/blob/master/Proxies/ForeignExchange.zip
 
 ## Step 2
 Invoke and test the JSON endpoint.
