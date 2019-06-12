@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "3dfba611-24d2-453c-be02-a7c4c8e2c63c",
+		"name": "AusPostDemo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OAuth Password Grant Type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b53d4891-7cc6-4c94-8d69-4988d6bef205",
+						"exec": [
+							"var data = pm.response.json()",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.environment.set(\"access_token\", data.access_token);",
+							"pm.environment.set(\"refresh_token\", data.refresh_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{Secret}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{Key}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{Auth}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{oktauser}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{oktapass}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{org}}-{{env}}.apigee.net/oauth/token",
+					"protocol": "https",
+					"host": [
+						"{{org}}-{{env}}",
+						"apigee",
+						"net"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SOAP Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:com=\"http://www.auspost.com.au/Schema/CommonDataModel/Common:v1\" xmlns:get=\"http://www.auspost.com.au/schemas/ProductandServicefulfilment/FinancialServices/getProductFXRates:v1\" xmlns:inv=\"http://www.auspost.com.au/Schema/CommonDataModel/InvolvedParty:v1\">\n   <soapenv:Header>\n      <com:InterfaceHeader>\n         <com:InterfaceName>getFx</com:InterfaceName>\n         <com:InterfaceVersion>1.0</com:InterfaceVersion>\n         <com:MessageType>Request</com:MessageType>\n         <com:BusinessReferenceID>testgetFx001</com:BusinessReferenceID>\n         <com:SourceSystemID>Gateway</com:SourceSystemID>\n         <com:Timestamp>2019-05-31T00:00:00Z</com:Timestamp>\n      </com:InterfaceHeader>\n   </soapenv:Header>\n   <soapenv:Body>\n      <get:getProductFXRates>\n         <!--Zero or more repetitions:-->\n         <get:Supplier>\n            <inv:OrganisationName>Access Prepaid Travel AOL</inv:OrganisationName>\n         </get:Supplier>\n      </get:getProductFXRates>\n   </soapenv:Body>\n</soapenv:Envelope>"
+				},
+				"url": {
+					"raw": "https://webapi-ptestext.npe.auspost.com.au/Services/FinancialServices_v1",
+					"protocol": "https",
+					"host": [
+						"webapi-ptestext",
+						"npe",
+						"auspost",
+						"com",
+						"au"
+					],
+					"path": [
+						"Services",
+						"FinancialServices_v1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "JSON Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{org}}-{{env}}.apigee.net/foreignexchange/v1/productfxrates_v1?InterfaceName=getFx&InterfaceVersion=1.0&MessageType=Request&BusinessReferenceID=testgetFx001&SourceSystemID=Gateway&Timestamp=2019-05-31T00:00:00Z&OrganisationName=Access Prepaid Travel AOL",
+					"protocol": "https",
+					"host": [
+						"{{org}}-{{env}}",
+						"apigee",
+						"net"
+					],
+					"path": [
+						"foreignexchange",
+						"v1",
+						"productfxrates_v1"
+					],
+					"query": [
+						{
+							"key": "InterfaceName",
+							"value": "getFx"
+						},
+						{
+							"key": "InterfaceVersion",
+							"value": "1.0"
+						},
+						{
+							"key": "MessageType",
+							"value": "Request"
+						},
+						{
+							"key": "BusinessReferenceID",
+							"value": "testgetFx001"
+						},
+						{
+							"key": "SourceSystemID",
+							"value": "Gateway"
+						},
+						{
+							"key": "Timestamp",
+							"value": "2019-05-31T00:00:00Z"
+						},
+						{
+							"key": "OrganisationName",
+							"value": "Access Prepaid Travel AOL"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API Key JSON Request",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "oDaQe5TTzvQRFC4x",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "2IuUyIATvyhWmZ32y6V6nnbAvHs4Per5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{org}}-{{env}}.apigee.net/foreignexchange/v1/productfxrates_v2?InterfaceName=getFx&InterfaceVersion=1.0&MessageType=Request&BusinessReferenceID=testgetFx001&SourceSystemID=Gateway&Timestamp=2019-05-31T00:00:00Z&OrganisationName=Access Prepaid Travel AOL",
+					"protocol": "https",
+					"host": [
+						"{{org}}-{{env}}",
+						"apigee",
+						"net"
+					],
+					"path": [
+						"foreignexchange",
+						"v1",
+						"productfxrates_v2"
+					],
+					"query": [
+						{
+							"key": "InterfaceName",
+							"value": "getFx"
+						},
+						{
+							"key": "InterfaceVersion",
+							"value": "1.0"
+						},
+						{
+							"key": "MessageType",
+							"value": "Request"
+						},
+						{
+							"key": "BusinessReferenceID",
+							"value": "testgetFx001"
+						},
+						{
+							"key": "SourceSystemID",
+							"value": "Gateway"
+						},
+						{
+							"key": "Timestamp",
+							"value": "2019-05-31T00:00:00Z"
+						},
+						{
+							"key": "OrganisationName",
+							"value": "Access Prepaid Travel AOL"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Token Verification JSON Request",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{org}}-{{env}}.apigee.net/foreignexchange/v1/productfxrates_v3?InterfaceName=getFx&InterfaceVersion=1.0&MessageType=Request&BusinessReferenceID=testgetFx001&SourceSystemID=Gateway&Timestamp=2019-05-31T00:00:00Z&OrganisationName=Access Prepaid Travel AOL",
+					"protocol": "https",
+					"host": [
+						"{{org}}-{{env}}",
+						"apigee",
+						"net"
+					],
+					"path": [
+						"foreignexchange",
+						"v1",
+						"productfxrates_v3"
+					],
+					"query": [
+						{
+							"key": "InterfaceName",
+							"value": "getFx"
+						},
+						{
+							"key": "InterfaceVersion",
+							"value": "1.0"
+						},
+						{
+							"key": "MessageType",
+							"value": "Request"
+						},
+						{
+							"key": "BusinessReferenceID",
+							"value": "testgetFx001"
+						},
+						{
+							"key": "SourceSystemID",
+							"value": "Gateway"
+						},
+						{
+							"key": "Timestamp",
+							"value": "2019-05-31T00:00:00Z"
+						},
+						{
+							"key": "OrganisationName",
+							"value": "Access Prepaid Travel AOL"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
